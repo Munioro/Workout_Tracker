@@ -4,6 +4,7 @@ const Workouts = require('../models/workouts');
 router.get('/api/workouts', (req, res) => {
     Workouts.find({})
     .then(dbworkouts => {
+        console.log(dbworkouts);
         res.json(dbworkouts);
     })
     .catch(err => {
@@ -12,8 +13,11 @@ router.get('/api/workouts', (req, res) => {
 });
 
 router.put('/api/workouts/:id', (req, res) => {
-    Workouts.findByIdAndUpdate({_id}, {body})
+    console.log(req.body)
+    Workouts.findByIdAndUpdate(req.params.id, {$push: {exercises: req.body}})
     .then(dbworkouts => {
+
+        console.log(dbworkouts)
         res.json(dbworkouts);
     }).catch (err => {
         res.json(err)

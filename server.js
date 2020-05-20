@@ -1,5 +1,5 @@
-const express = require('express');
-const mongoose = require('mongoose');
+let express = require('express');
+let mongoose = require('mongoose');
 
 const PORT = process.env.PORT || 3000;
 
@@ -10,14 +10,16 @@ app.use(express.json());
 
 app.use(express.static('public'));
 
-mongoose.connect(process.env.MONGODDB_URI || "mongod://localhost/workouts", {
+mongoose.connect(process.env.MONGODDB_URI || "mongodb://localhost/workout", {
     useNewUrlParser: true,
     useFindAndModify: false
 });
 
 //routes
 app.use(require('./routes/api'));
+app.use(require('./routes/htmlRoutes'));
+
 
 app.listen(PORT, () => {
-    console.log(`App running on localhost://${PORT}`);
+    console.log(`App running on localhost:${PORT}`);
 });
